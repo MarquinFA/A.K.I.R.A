@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/boxicons@2.1.1/dist/boxicons.min.js"></script>
+  <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: #fcfcfc;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza a transição de cores */
+    }
+
+    nav {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 80px;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+    }
+
+    nav .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(4995deg);
+      background-color: #F22771; /* Cor inicial do menu */
+      transition: background-color 0.3s ease; /* Suaviza a transição de cores */
+    }
+
+    .nav-content .toggle-btn,
+    .nav-content span a {
+      height: 60px;
+      width: 60px;
+      background: #F22771;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-content .toggle-btn {
+      font-size: 35px;
+      color: #fff;
+      z-index: 100;
+      cursor: pointer;
+      transform: rotate(500deg);
+      transition: all 0.6s ease;
+    }
+
+    nav.open .toggle-btn {
+      transform: rotate(45deg);
+    }
+
+    .nav-content span {
+      position: absolute;
+      transition: all 0.6s ease;
+      opacity: 0;
+    }
+
+    nav.open .nav-content span {
+      transform: rotate(calc(var(--i) * (360deg / 8))) translateX(-120px);
+      opacity: 1;
+    }
+
+    .nav-content span a {
+      transform: rotate(calc(-1 * var(--i) * (360deg / 8)));
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-family: 'Press Start 2P', cursive;
+      color: #FFFFFF; /* Cor inicial da logo */
+      text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
+      transition: color 0.3s ease; /* Suaviza a transição de cores */
+      position: absolute;
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%); 
+    }
+
+    .logo.small {
+      font-size: 30px;
+      top: 5%; 
+      transform: translate(-50%, 0); 
+    }
+
+    .chat-container {
+      position: absolute;
+      bottom: 80px;
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 15px;
+      word-wrap: break-word;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza a transição de cores */
+    }
+
+    .user-message {
+      background: #F22771;
+      color: #fff;
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    .bot-message {
+      background: #e0e0e0;
+      color: #000;
+      align-self: flex-start;
+      text-align: left;
+    }
+
+    .input-container {
+      position: absolute;
+      bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .input-container input {
+      width: 300px;
+      padding: 10px;
+      border: 2px solid #000;
+      border-radius: 25px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .input-container button {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <nav>
+    <div class="nav-content">
+      <div class="toggle-btn">
+        <box-icon name="plus"></box-icon>
+      </div>
+      <span style="--i:3;"><a href="#"><box-icon name="user"></box-icon></a></span>
+      <span style="--i:4;"><a href="#"><box-icon name="map"></box-icon></a></span>
+      <span style="--i:5;"><a href="#"><box-icon name="cog"></box-icon></a></span>
+      <span style="--i:6;"><a href="#" id="colorPicker"><box-icon name="palette"></box-icon></a></span>
+      <span style="--i:7;"><a href="#"><box-icon name="star"></box-icon></a></span>
+    </div>
+  </nav>
+
+  <div class="logo">A.K.I.R.A</div>
+  <div class="chat-container" id="chatContainer"></div>
+
+  <div class="input-container">
+    <input type="text" id="userInput" placeholder="Pergunte algo..." />
+    <button onclick="sendMessage()">Enviar</button>
+  </div>
+
+  <script>
+    const nav = document.querySelector("nav"),
+          toggleBtn = nav.querySelector(".toggle-btn"),
+          logo = document.querySelector(".logo"),
+          chatContainer = document.getElementById("chatContainer"),
+          userInput = document.getElementById("userInput");
+
+    toggleBtn.addEventListener("click", () => {
+      nav.classList.toggle("open");
+    });
+
+    function onDrag({ movementY }) {
+      const navStyle = window.getComputedStyle(nav),
+            navTop = parseInt(navStyle.top),
+            navHeight = parseInt(navStyle.height),
+            windHeight = window.innerHeight;
+
+      nav.style.top = navTop > 0 ? `${navTop + movementY}px` : "1px";
+      if (navTop > windHeight - navHeight) {
+        nav.style.top = `${windHeight - navHeight}px`;
+      }
+    }
+
+    nav.addEventListener("mousedown", () => {
+      nav.addEventListener("mousemove", onDrag);
+    });
+
+    nav.addEventListener("mouseup", () => {
+      nav.removeEventListener("mousemove", onDrag);
+    });
+
+    nav.addEventListener("mouseleave", () => {
+      nav.removeEventListener("mousemove", onDrag);
+    });
+
+    function sendMessage() {
+      const text = userInput.value.trim();
+      if (text !== "") {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message", "user-message");
+        messageElement.textContent = text;
+
+        chatContainer.appendChild(messageElement);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        logo.classList.add("small"); 
+        userInput.value = "";
+
+        // Simula uma resposta
+        setTimeout(() => {
+          const botMessageElement = document.createElement("div");
+          botMessageElement.classList.add("message", "bot-message");
+          botMessageElement.textContent = `Você disse: "${text}". Como posso ajudar?`;
+          chatContainer.appendChild(botMessageElement);
+          chatContainer.scrollTop = chatContainer.scrollHeight;
+        }, 1000);
+      }
+    }
+
+    userInput.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    // Função para mudar as cores
+    function changeColors(color) {
+      const body = document.body;
+      const navContent = document.querySelector(".nav-content");
+      const logo = document.querySelector(".logo");
+      const chatContainer = document.getElementById("chatContainer");
+      const userMessages = document.querySelectorAll(".user-message");
+      const botMessages = document.querySelectorAll(".bot-message");
+
+      // Mapeamento de cores
+      const colorMap = {
+        preto: { 
+          background: "#000000", 
+          text: "#FFFFFF", 
+          menu: "#1A1A1A", 
+          logo: "#FFFFFF" 
+        },
+        branco: { 
+          background: "#FFFFFF", 
+          text: "#000000", 
+          menu: "#F0F0F0", 
+          logo: "#000000" 
+        },
+        amarelo: { 
+          background: "#F2E52E", 
+          text: "#000000", 
+          menu: "#FFD700", 
+          logo: "#000000" 
+        },
+        rosa: { 
+          background: "#F22771", 
+          text: "#FFFFFF", 
+          menu: "#FF69B4", 
+          logo: "#FFFFFF" 
+        },
+        azul: { 
+          background: "#0000FF", 
+          text: "#FFFFFF", 
+          menu: "#1E90FF", 
+          logo: "#FFFFFF" 
+        },
+        verde: { 
+          background: "#00FF00", 
+          text: "#000000", 
+          menu: "#32CD32", 
+          logo: "#000000" 
+        },
+        // Adicione mais cores aqui se quiser
+      };
+
+      // Verifica se a cor existe no mapeamento
+      if (colorMap[color]) {
+        // Aplica as cores ao body (fundo da página)
+        body.style.backgroundColor = colorMap[color].background;
+        body.style.color = colorMap[color].text;
+
+        // Aplica as cores ao menu
+        navContent.style.backgroundColor = colorMap[color].menu;
+
+        // Aplica as cores à logo
+        logo.style.color = colorMap[color].logo;
+
+        // Aplica as cores às mensagens do chat
+        userMessages.forEach(message => {
+          message.style.backgroundColor = colorMap[color].menu;
+          message.style.color = colorMap[color].text;
+        });
+
+        botMessages.forEach(message => {
+          message.style.backgroundColor = colorMap[color].background;
+          message.style.color = colorMap[color].text;
+        });
+      } else {
+        alert("Cor não reconhecida! Tente: preto, branco, amarelo, rosa, azul, verde.");
+      }
+    }
+
+    // Adicionar evento de clique no ícone "palette"
+    document.getElementById("colorPicker").addEventListener("click", () => {
+      const color = prompt("Digite uma cor (ex: preto, branco, amarelo, rosa):");
+      if (color) {
+        changeColors(color.toLowerCase()); // Converte para minúsculas para evitar erros
+      }
+    });
+  </script>
+</body>
+</html>
