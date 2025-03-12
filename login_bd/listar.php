@@ -1,7 +1,7 @@
 <?php
 include("conexao.php");
 
-$sql = "SELECT *from login";
+$sql = "SELECT * FROM login";
 $resultado = $conexao->query($sql);
 
 if($resultado->num_rows > 0) {
