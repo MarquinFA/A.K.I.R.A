@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.K.I.R.A Intro</title>
+    <link rel="stylesheet" href="tv.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            font-family: 'Orbitron', sans-serif;
+            color: #F22771;
+            overflow: hidden;
+        }
+
+        /* Tela de Login e Cadastro */
+        .login-screen {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #F22771;
+            text-align: center;
+            z-index: 1000;
+            width: 300px;
+        }
+
+        .login-screen.visible {
+            display: block;
+        }
+
+        .login-screen h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #F22771;
+            text-transform: uppercase;
+        }
+
+        .login-screen input {
+            display: block;
+            margin: 15px auto;
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #F22771;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #F22771;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-screen input:focus {
+            border-color: #F2E52E;
+        }
+
+        .login-screen button {
+            padding: 10px 20px;
+            border: 1px solid #F22771;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #F22771;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-screen button:hover {
+            background-color: #d0ff00;
+            color: #000;
+        }
+
+        .login-screen .toggle-form {
+            margin-top: 15px;
+            color: #F2E52E;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        .login-screen .toggle-form:hover {
+            color: #F2E52E;
+        }
+    </style>
+</head>
+<body>
+    <div class="room" id="room">
+        <div class="ambient-light"></div>
+        <div class="rug"></div>
+        <div class="tv-stand" id="tvStand">
+            <div class="drawer"></div>
+        </div>
+        <div class="tv-container" id="tvContainer">
+            <div class="tv-screen">
+                <div class="static"></div>
+                <div class="scan-lines"></div>
+                <div class="logo">A.K.I.R.A</div>
+            </div>
+            <div class="tv-controls">
+                <div class="knob"></div>
+                <div class="button"></div>
+                <div class="knob"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de fds-->
+    <div class="login-screen" id="loginScreen">
+        <div id="loginForm">
+            <h2>Login</h2>
+            <input type="text" id="loginUsername" placeholder="Usuário">
+            <input type="password" id="loginPassword" placeholder="Senha">
+            <button onclick="login()">Entrar</button>
+            <div class="toggle-form" onclick="toggleForm('register')">Não tem uma conta? Cadastre-se</div>
+        </div>
+        <div id="registerForm" style="display: none;">
+            <h2>Cadastro</h2>
+            <input type="text" id="registerUsername" placeholder="Usuário">
+            <input type="password" id="registerPassword" placeholder="Senha">
+            <input type="password" id="registerConfirmPassword" placeholder="Confirmar Senha">
+            <button onclick="register()">Cadastrar</button>
+            <div class="toggle-form" onclick="toggleForm('login')">Já tem uma conta? Faça login</div>
+        </div>
+    </div>
+
+    <audio id="ambientSound" src="som/ambiente.wav" preload="auto" loop></audio>
+    <audio id="powerOnSound" src="som/tvligando.wav" preload="auto"></audio>
+
+    <script>
+        function startAnimationAndSound() {
+            // Tocar o som ambiente
+            document.getElementById('ambientSound').play();
+
+            setTimeout(() => {
+                // Som quando a TV ligar
+                document.getElementById('powerOnSound').play();
+
+                // Iniciar animação
+                document.getElementById('tvContainer').classList.add('zoom');
+                document.getElementById('tvStand').classList.add('hide');
+
+                setTimeout(() => {
+                    document.getElementById('room').classList.add('blackout');
+                    setTimeout(() => {
+                        // Mostrar a tela de login
+                        document.getElementById('loginScreen').classList.add('visible');
+                    }, 1000);
+                }, 2000);
+            }, 3000);
+        }
+
+        // Função para alternar entre login e cadastro
+        function toggleForm(formType) {
+            if (formType === 'register') {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'block';
+            } else {
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('loginForm').style.display = 'block';
+            }
+        }
+
+        // cadastro
+        function register() {
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            // Simulação do cadastro, na cagada a gente mete algo aq
+            alert(`Usuário ${username} cadastrado com sucesso!`);
+            toggleForm('login'); // Volta para a tela de login após o cadastro
+        }
+
+        // login
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Simulaçao da bomba do login, essa disgraça tbm eh metivel
+            if (username && password) {
+                alert(`Login realizado com o usuário: ${username}`);
+                window.location.href = 'menu.html'; // Redireciona para a sua ex
+            } else {
+                alert('Preencha todos os campos!');
+            }
+        }
+
+        // Iniciar animação e som ao clicar ou pressionar qualquer tecla
+        document.body.addEventListener('click', startAnimationAndSound);
+        document.body.addEventListener('keydown', startAnimationAndSound);
+    </script>
+</body>
+</html>
