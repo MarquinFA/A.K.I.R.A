@@ -1,5 +1,5 @@
 {
-    "liveServer.settings.port": 3306,
+    "liveServer.settings.port": 5501,
     "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
     "liveServer.settings.ChromeDebuggingAttachment": false,
     "liveServer.settings.ignoreFiles": [
