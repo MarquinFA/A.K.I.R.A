@@ -8,358 +8,381 @@
 </head>
 <body>
     <style>
-               @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-    background: #1a1a1a; 
-    overflow: hidden; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    height: 100vh; 
-    cursor: pointer; 
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #1a1a1a; 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            cursor: pointer; 
+        }
 
-/* Quarto */
-.room {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(to top, #2b2b2b, #1a1a1a);
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    overflow: hidden;
-}
+        /* Quarto */
+        .room {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to top, #2b2b2b, #1a1a1a);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+        }
 
-/* Luz */
-.ambient-light {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.02), transparent 70%);
-    animation: light-flicker 5s infinite alternate;
-}
+        /* Luz */
+        .ambient-light {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02), transparent 70%);
+            animation: light-flicker 5s infinite alternate;
+        }
 
-@keyframes light-flicker {
-    0% { opacity: 0.5; }
-    100% { opacity: 1; }
-}
+        @keyframes light-flicker {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
 
-/* Móvel */
-.tv-stand {
-    width: 350px; 
-    height: 120px;
-    background: #3b2f2f;
-    border-radius: 10px;
-    position: absolute;
-    bottom: 50px;
-    box-shadow: 
-        inset 0 -5px 0 #2a1f1f, 
-        0 10px 20px rgba(0, 0, 0, 0.5),
-        inset 0 0 10px rgba(0, 0, 0, 0.3);
-    transition: transform 2s ease-in-out, opacity 2s ease-in-out;
-    z-index: 1;
-}
+        /* Móvel */
+        .tv-stand {
+            width: 350px; 
+            height: 120px;
+            background: #3b2f2f;
+            border-radius: 10px;
+            position: absolute;
+            bottom: 50px;
+            box-shadow: 
+                inset 0 -5px 0 #2a1f1f, 
+                0 10px 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+            z-index: 1;
+        }
 
-.tv-stand::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-        to bottom,
-        transparent,
-        rgba(0, 0, 0, 0.1) 50%,
-        transparent
-    );
-    border-radius: 10px;
-    pointer-events: none;
-}
+        .tv-stand::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(0, 0, 0, 0.1) 50%,
+                transparent
+            );
+            border-radius: 10px;
+            pointer-events: none;
+        }
 
-.tv-stand::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 10px;
-    background: #2a1f1f;
-    border-radius: 5px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-}
+        .tv-stand::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 10px;
+            background: #2a1f1f;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
 
-/* Gavetas */
-.tv-stand .drawer {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 20px;
-    background: #2a1f1f;
-    border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-}
+        /* Gavetas */
+        .tv-stand .drawer {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 20px;
+            background: #2a1f1f;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
 
-.tv-stand .drawer::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 5px;
-    background: #555;
-    border-radius: 3px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-}
+        .tv-stand .drawer::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 5px;
+            background: #555;
+            border-radius: 3px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
 
-/* TV */
-.tv-container {
-    width: 320px;
-    height: 220px;
-    background: #222;
-    border-radius: 15px;
-    border: 10px solid #444;
-    position: absolute;
-    bottom: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 
-        0 0 15px rgba(0, 0, 0, 0.8), 
-        0 0 30px rgba(0, 255, 0, 0.3),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-    transition: transform 2s ease-in-out, opacity 2s ease-in-out;
-    overflow: hidden;
-}
+        /* TV */
+        .tv-container {
+            width: 320px;
+            height: 220px;
+            background: #222;
+            border-radius: 15px;
+            border: 10px solid #444;
+            position: absolute;
+            bottom: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 15px rgba(0, 0, 0, 0.8), 
+                0 0 30px rgba(0, 255, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+            overflow: hidden;
+        }
 
-.tv-container::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0.05) 50%,
-        transparent 50%
-    );
-    border-radius: 25px;
-    pointer-events: none;
-}
+        .tv-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.05) 50%,
+                transparent 50%
+            );
+            border-radius: 25px;
+            pointer-events: none;
+        }
 
-.tv-container::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 10px;
-    background: #444;
-    border-radius: 5px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-}
+        .tv-container::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 10px;
+            background: #444;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
 
-/* Controles da TV */
-.tv-controls {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-}
+        /* Controles da TV */
+        .tv-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
 
-.tv-controls .knob {
-    width: 15px;
-    height: 15px;
-    background: #555;
-    border-radius: 50%;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-}
+        .tv-controls .knob {
+            width: 15px;
+            height: 15px;
+            background: #555;
+            border-radius: 50%;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
 
-.tv-controls .button {
-    width: 20px;
-    height: 10px;
-    background: #555;
-    border-radius: 3px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-}
+        .tv-controls .button {
+            width: 20px;
+            height: 10px;
+            background: #555;
+            border-radius: 3px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
 
-/* Tela da TV */
-.tv-screen {
-    width: 280px;
-    height: 180px;
-    background: #111;
-    border: 5px solid #333;
-    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3), 0 0 20px rgba(0, 255, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-}
+        /* Tela da TV */
+        .tv-screen {
+            width: 280px;
+            height: 180px;
+            background: #111;
+            border: 5px solid #333;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3), 0 0 20px rgba(0, 255, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-/* Efeito de estática */
-.static {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.8),
-        rgba(255, 255, 255, 0.1) 10%,
-        transparent 20%
-    );
-    animation: static-effect 0.5s infinite;
-}
+        /* Efeito de estática */
+        .static {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.8),
+                rgba(255, 255, 255, 0.1) 10%,
+                transparent 20%
+            );
+            animation: static-effect 0.5s infinite;
+        }
 
-@keyframes static-effect {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-100%); }
-}
+        @keyframes static-effect {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
 
-/* Efeito de scan lines na TV */
-.scan-lines {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 2px,
-        rgba(255, 255, 255, 0.05) 2px,
-        rgba(255, 255, 255, 0.05) 4px
-    );
-    animation: scan 5s linear infinite;
-}
+        /* Efeito de scan lines na TV */
+        .scan-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.05) 2px,
+                rgba(255, 255, 255, 0.05) 4px
+            );
+            animation: scan 5s linear infinite;
+        }
 
-@keyframes scan {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
-}
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
 
-/* Logo */
-.logo {
-    font-size: 1.5rem;
-    font-family: 'Press Start 2P', cursive;
-    color: #F22771;
-    text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
-    animation: glow 1s infinite alternate;
-}
+        /* Logo */
+        .logo {
+            font-size: 1.5rem;
+            font-family: 'Press Start 2P', cursive;
+            color: #F22771;
+            text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
+            animation: glow 1s infinite alternate;
+        }
 
-/* Animação de brilho no texto */
-@keyframes glow {
-    from {
-        text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
-    }
-    to {
-        text-shadow: 3px 3px 0 #F2E52E, 0 0 20px #F22771, 0 0 40px #F22771;
-    }
-}
+        /* Animação de brilho no texto */
+        @keyframes glow {
+            from {
+                text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
+            }
+            to {
+                text-shadow: 3px 3px 0 #F2E52E, 0 0 20px #F22771, 0 0 40px #F22771;
+            }
+        }
 
-/* Zoom in */
-.zoom {
-    transform: scale(10);
-    opacity: 0;
-    transition: transform 2s ease-in-out, opacity 2s ease-in-out;
-}
+        /* Zoom in */
+        .zoom {
+            transform: scale(10);
+            opacity: 0;
+            transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+        }
 
-/* Fundo preto depois do zoom */
-.blackout {
-    background: #000;
-    transition: background 1s ease-in-out;
-}
+        /* Fundo preto depois do zoom */
+        .blackout {
+            background: #000;
+            transition: background 1s ease-in-out;
+        }
 
-/* Esconder o móvel */
-.hide {
-    opacity: 0;
-    transform: translateY(1500px);
-    transition: opacity 2s ease-in-out, transform 2s ease-in-out;
-}
+        /* Esconder o móvel */
+        .hide {
+            opacity: 0;
+            transform: translateY(1500px);
+            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+        }
 
-/* Tela de Login/Cadastro */
-.login-screen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-    text-align: center;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    z-index: 2;
-}
+        /* Tela de Login/Cadastro */
+        .login-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 2;
+        }
 
-.login-screen.visible {
-    opacity: 1;
-}
+        .login-screen.visible {
+            opacity: 1;
+        }
 
-.login-screen h2 {
-    font-family: 'Press Start 2P', cursive;
-    color: #F22771;
-    text-shadow: 2px 2px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
-    margin-bottom: 20px;
-}
+        .login-screen h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: #F22771;
+            text-shadow: 2px 2px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
+            margin-bottom: 20px;
+        }
 
-.login-screen input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 2px solid #F22771;
-    border-radius: 5px;
-    background: #111;
-    color: #F22771;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.8rem;
-    text-align: center;
-}
+        .login-screen input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #F22771;
+            border-radius: 5px;
+            background: #111;
+            color: #F22771;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            text-align: center;
+        }
 
-.login-screen button {
-    background: #F22771;
-    color: #F2E52E;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-}
+        .login-screen button {
+            background: #F22771;
+            color: #F2E52E;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
 
-.login-screen button:hover {
-    background: #F2E52E;
-    color: #F22771;
-}
+        .login-screen button:hover {
+            background: #F2E52E;
+            color: #F22771;
+        }
 
-.login-screen p {
-    color: #F22771;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.8rem;
-    margin-top: 10px;
-    cursor: pointer;
-}
+        .login-screen p {
+            color: #F22771;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            cursor: pointer;
+        }
 
-.login-screen p:hover {
-    text-decoration: underline;
-}
+        .login-screen p:hover {
+            text-decoration: underline;
+        }
 
-/* Esconder elementos */
-.hidden {
-    display: none;
-}
+        /* Ícone de olho */
+        .password-container {
+            position: relative;
+        }
+
+        .password-container input {
+            padding-right: 40px; /* Espaço para o ícone */
+        }
+
+        .password-container .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #F22771;
+            font-size: 1rem;
+        }
+
+        .password-container .eye-icon:hover {
+            color: #F2E52E;
+        }
+
+        /* Esconder elementos */
+        .hidden {
+            display: none;
+        }
     </style>
     <div class="room" id="room">
         <div class="ambient-light"></div>
@@ -382,8 +405,14 @@ body {
         <div class="login-screen" id="loginScreen">
             <h2>Login</h2>
             <input type="text" placeholder="Usuário" id="username">
-            <input type="password" placeholder="Senha" id="password">
-            <input type="password" placeholder="Confirmar Senha" id="confirmPassword" class="hidden">
+            <div class="password-container">
+                <input type="password" placeholder="Senha" id="password">
+                <span class="eye-icon" onclick="togglePasswordVisibility('password')">👁️</span>
+            </div>
+            <div class="password-container hidden" id="confirmPasswordContainer">
+                <input type="password" placeholder="Confirmar Senha" id="confirmPassword">
+                <span class="eye-icon" onclick="togglePasswordVisibility('confirmPassword')">👁️</span>
+            </div>
             <button onclick="handleAction()">Entrar</button>
             <p onclick="toggleRegister()">Cadastrar</p>
         </div>
@@ -430,18 +459,28 @@ body {
         // Função para alternar entre login e cadastro
         function toggleRegister() {
             const loginScreen = document.getElementById('loginScreen');
-            const confirmPasswordField = document.getElementById('confirmPassword');
+            const confirmPasswordContainer = document.getElementById('confirmPasswordContainer');
 
             if (loginScreen.querySelector('h2').textContent === 'Login') {
                 loginScreen.querySelector('h2').textContent = 'Cadastro';
                 loginScreen.querySelector('button').textContent = 'Cadastrar';
                 loginScreen.querySelector('p').textContent = 'Voltar ao Login';
-                confirmPasswordField.classList.remove('hidden'); // Mostra o campo "Confirmar Senha"
+                confirmPasswordContainer.classList.remove('hidden'); // Mostra o campo "Confirmar Senha"
             } else {
                 loginScreen.querySelector('h2').textContent = 'Login';
                 loginScreen.querySelector('button').textContent = 'Entrar';
                 loginScreen.querySelector('p').textContent = 'Cadastrar';
-                confirmPasswordField.classList.add('hidden'); // Oculta o campo "Confirmar Senha"
+                confirmPasswordContainer.classList.add('hidden'); // Oculta o campo "Confirmar Senha"
+            }
+        }
+
+        // Função para alternar a visibilidade da senha
+        function togglePasswordVisibility(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
             }
         }
 
