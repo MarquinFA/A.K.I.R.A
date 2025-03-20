@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $sql = "INSERT INTO cadastro (nome, senha) VALUES ('$nome', '$senha')";
 
-    if ($conxao->query($sql) === TRUE) {
+    if ($conexao->query($sql) === TRUE) {
         echo "teste concluido";
     } else {
         echo "teste falhou: " . $sql . "<br>" .
