@@ -1,14 +1,18 @@
 <?php
-$servidor = "127.0.0.1";
-$usuario = "root";
+session_start();
+$localhost = "127.0.0.1:3306";
+$user = "root";
 $senha = "";
 $banco = "akira";
-$porta = "3306";
 
-$conexao = new mysqli($servidor, $usuario, $senha, $banco , $porta);
+$ligacao = mysqli_connect($localhost,$user,$senha,$banco);
 
-if ($conexao->connect_error) {
-    die("Falha na conexão: " .
-    $conexao->connect_error);
+
+if(!$ligacao){
+    (die("Conexão falhou. ".mysqli_connect_error()));
 }
+else{
+    echo "Banco de Dados conectado com sucesso.<br>";
+}
+
 ?>
