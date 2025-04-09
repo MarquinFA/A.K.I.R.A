@@ -203,7 +203,7 @@
         <!-- Conteúdo principal -->
         <main class="main-content">
             <header class="header">
-                <h1>Configurações da Conta</h1>
+                <h1 id="conta">Configurações da Conta</h1>
             </header>
             <br>
             <br>
@@ -216,9 +216,9 @@
                 <div class="language-selector">
                     <button class="lang-btn" onclick="toggleLanguageMenu()">Selecionar Idioma</button>
                     <div class="language-menu" id="languageMenu">
-                        <a href="#" onclick="changeLanguage('Português')">🇧🇷 Português</a>
-                        <a href="#" onclick="changeLanguage('English')">🇺🇸 English</a>
-                        <a href="#" onclick="changeLanguage('Español')">🇪🇸 Español</a>
+                        <a href="#" onclick="changeLanguage('Português')" class="pt-BR">🇧🇷 Português</a>
+                        <a href="#" onclick="changeLanguage('English')" class="eng">🇺🇸 English</a>
+                        <a href="#" onclick="changeLanguage('Español')" class="esp">🇪🇸 Español</a>
                     </div>
                 </div>
                 <br>
@@ -258,6 +258,16 @@
     </div>
 
     <script>
+        document.getElementsByClassName('pt-BR').addEventListener('click', function(){
+            var currentLang = document.documentElement.lang;
+
+            if (currentLang === 'pt-BR') {
+                document.documentElement.lang = 'en';
+                document.getElementsByClassName('conta').textContent = 'Count Settings';
+            } else{
+                document.documentElement.lang = 'pt-BR';
+            }
+        });
         // Função para abrir/fechar o menu de idiomas
         function toggleLanguageMenu() {
             document.getElementById("languageMenu").classList.toggle("show");

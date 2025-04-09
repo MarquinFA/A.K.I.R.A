@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troca de Idioma</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h1 id="title">Olá, Mundo!</h1>
+        <p id="description">Bem-vindo ao exemplo de troca de linguagem.</p>
+        <button id="languageButton">Mudar para Inglês</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // script.js
+document.getElementById('languageButton').addEventListener('click', function() {
+    var currentLang = document.documentElement.lang;
+    
+    if (currentLang === 'pt-br') {
+        // Mudar para inglês
+        document.documentElement.lang = 'en';
+        document.getElementById('title').textContent = 'Hello, World!';
+        document.getElementById('description').textContent = 'Welcome to the language switch example.';
+        document.getElementById('languageButton').textContent = 'Switch to Portuguese';
+    } else {
+        // Mudar para português
+        document.documentElement.lang = 'pt-br';
+        document.getElementById('title').textContent = 'Olá, Mundo!';
+        document.getElementById('description').textContent = 'Bem-vindo ao exemplo de troca de linguagem.';
+        document.getElementById('languageButton').textContent = 'Mudar para Inglês';
+    }
+});
+
+    </script>
+</body>
+</html>
