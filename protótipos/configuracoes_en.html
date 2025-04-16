@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Page</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; display: flex; height: 100vh; }
+        .container { display: flex; width: 100vw; height: 100vh; }
+        .sidebar { width: 250px; background-color: #2c3e50; padding: 20px; color: white; display: flex; flex-direction: column; }
+        .sidebar .logo img { max-width: 100%; height: auto; }
+        .sidebar ul { list-style: none; margin-top: 210px; display: flex; flex-direction: column; align-items: flex-start; }
+        .sidebar ul li { margin: 15px 0; }
+        .sidebar ul li a { color: white; text-decoration: none; font-size: 18px; display: block; padding: 5px; }
+        .sidebar ul li a:hover { background-color: #34495e; border-radius: 5px; }
+        .main-content { flex: 1; padding: 0; display: flex; flex-direction: column; background-color: #ffffff; }
+        .header { background-color: #f22771; width: 100%; padding: 20px; box-sizing: border-box; }
+        .header h1 { margin: 0; color: white; font-size: 24px; }
+        .settings { margin-top: 20px; flex: 1; }
+        .lang-btn, .theme-btn, .delete-button, .edit-button { background-color: #2c3e50; color: white; padding: 10px 15px; border: none; cursor: pointer; font-size: 16px; border-radius: 5px; }
+        .lang-btn:hover, .theme-btn:hover, .delete-button:hover, .edit-button:hover { background-color: #34495e; }
+        .language-menu, .theme-menu { display: none; position: absolute; background-color: white; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); min-width: 150px; border-radius: 5px; overflow: hidden; z-index: 1000; }
+        .language-menu a, .theme-menu a { display: block; padding: 10px; text-decoration: none; color: black; }
+        .language-menu a:hover, .theme-menu a:hover { background-color: #f1f1f1; }
+        .show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="Logo.jpg" alt="Logo" />
+            </div>
+            <ul>
+                <li><a href="#">All</a></li>
+                <li><a href="#">Language</a></li>
+                <li><a href="#">Theme</a></li>
+                <li><a href="#">Account</a></li>
+                <li><a href="#">Others</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h1>Account Settings</h1>
+            </header>
+            <section class="settings">
+                <div class="language-selector">
+                    <button class="lang-btn" onclick="toggleLanguageMenu()">Select Language</button>
+                    <div class="language-menu" id="languageMenu">
+                        <a href="#">🇧🇷 Portuguese</a>
+                        <a href="#">🇺🇸 English</a>
+                        <a href="#">🇪🇸 Spanish</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="theme-selector">
+                    <button class="theme-btn" onclick="toggleThemeMenu()">Select Theme</button>
+                    <div class="theme-menu" id="themeMenu">
+                        <a href="#">Light</a>
+                        <a href="#">Dark</a>
+                        <a href="#">Yellow</a>
+                        <a href="#">Pink</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="delete-account">
+                    <button class="delete-button" onclick="deleteAccount()">Delete Account</button>
+                </div>
+                <hr>
+                <div class="edit-account">
+                    <button class="edit-button" onclick="editAccount()">Edit Account Info</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        function toggleLanguageMenu() { document.getElementById("languageMenu").classList.toggle("show"); }
+        function toggleThemeMenu() { document.getElementById("themeMenu").classList.toggle("show"); }
+        function deleteAccount() { if (confirm("Are you sure you want to delete your account? This action is irreversible.")) { alert("Account deleted successfully!"); } }
+        function editAccount() { alert("Redirecting to account editing page..."); }
+        window.onclick = function(event) {
+            if (!event.target.matches('.lang-btn') && !event.target.matches('.theme-btn')) {
+                var dropdowns = document.getElementsByClassName("language-menu");
+                for (var i = 0; i < dropdowns.length; i++) { if (dropdowns[i].classList.contains('show')) { dropdowns[i].classList.remove('show'); } }
+                var themeDropdowns = document.getElementsByClassName("theme-menu");
+                for (var i = 0; i < themeDropdowns.length; i++) { if (themeDropdowns[i].classList.contains('show')) { themeDropdowns[i].classList.remove('show'); } }
+            }
+        }
+    </script>
+</body>
+</html>
