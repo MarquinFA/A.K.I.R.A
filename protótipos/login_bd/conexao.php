@@ -6,7 +6,6 @@ $banco = "akira";
 
 $conexao = new mysqli($servidor, $usuario, $senha, $banco);
 
-echo("conectado");
 
 if ($conexao->connect_error) {
     die("Falha na conexão: " .
