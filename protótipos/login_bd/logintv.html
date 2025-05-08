@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.K.I.R.A Intro</title>
+    <link rel="stylesheet" href="tv.css">
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #1a1a1a; 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            cursor: pointer; 
+        }
+
+        /* Quarto */
+        .room {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to top, #2b2b2b, #1a1a1a);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Luz */
+        .ambient-light {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02), transparent 70%);
+            animation: light-flicker 5s infinite alternate;
+        }
+
+        @keyframes light-flicker {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Móvel */
+        .tv-stand {
+            width: 350px; 
+            height: 120px;
+            background: #3b2f2f;
+            border-radius: 10px;
+            position: absolute;
+            bottom: 50px;
+            box-shadow: 
+                inset 0 -5px 0 #2a1f1f, 
+                0 10px 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+            z-index: 1;
+        }
+
+        .tv-stand::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(0, 0, 0, 0.1) 50%,
+                transparent
+            );
+            border-radius: 10px;
+            pointer-events: none;
+        }
+
+        .tv-stand::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 10px;
+            background: #2a1f1f;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Gavetas */
+        .tv-stand .drawer {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 20px;
+            background: #2a1f1f;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .tv-stand .drawer::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 5px;
+            background: #555;
+            border-radius: 3px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* TV */
+        .tv-container {
+            width: 320px;
+            height: 220px;
+            background: #222;
+            border-radius: 15px;
+            border: 10px solid #444;
+            position: absolute;
+            bottom: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 15px rgba(0, 0, 0, 0.8), 
+                0 0 30px rgba(0, 255, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+            overflow: hidden;
+        }
+
+        .tv-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.05) 50%,
+                transparent 50%
+            );
+            border-radius: 25px;
+            pointer-events: none;
+        }
+
+        .tv-container::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 10px;
+            background: #444;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Controles da TV */
+        .tv-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .tv-controls .knob {
+            width: 15px;
+            height: 15px;
+            background: #555;
+            border-radius: 50%;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .tv-controls .button {
+            width: 20px;
+            height: 10px;
+            background: #555;
+            border-radius: 3px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tela da TV */
+        .tv-screen {
+            width: 280px;
+            height: 180px;
+            background: #111;
+            border: 5px solid #333;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3), 0 0 20px rgba(0, 255, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Efeito de estática */
+        .static {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.8),
+                rgba(255, 255, 255, 0.1) 10%,
+                transparent 20%
+            );
+            animation: static-effect 0.5s infinite;
+        }
+
+        @keyframes static-effect {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        /* Efeito de scan lines na TV */
+        .scan-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.05) 2px,
+                rgba(255, 255, 255, 0.05) 4px
+            );
+            animation: scan 5s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 1.5rem;
+            font-family: 'Press Start 2P', cursive;
+            color: #F22771;
+            text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
+            animation: glow 1s infinite alternate;
+        }
+
+        /* Animação de brilho no texto */
+        @keyframes glow {
+            from {
+                text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
+            }
+            to {
+                text-shadow: 3px 3px 0 #F2E52E, 0 0 20px #F22771, 0 0 30px #F22771;
+            }
+        }
+
+        /* Formulário */
+        .login-form, .register-form {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+        }
+
+        .form-title {
+            color: #F22771;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            color: #fff;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            background: #222;
+            border: 2px solid #F22771;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="submit"] {
+            background: #F22771;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background: #F2E52E;
+        }
+    </style>
+
+    <div class="room">
+        <div class="ambient-light"></div>
+        <div class="tv-stand">
+            <div class="drawer"></div>
+        </div>
+        <div class="tv-container">
+            <div class="tv-screen">
+                <div class="static"></div>
+                <div class="scan-lines"></div>
+            </div>
+        </div>
+        <div class="tv-controls">
+            <div class="knob"></div>
+            <div class="knob"></div>
+            <div class="button"></div>
+        </div>
+    </div>
+    
+    <div class="login-form">
+        <div class="form-title">Login</div>
+        <form method="POST" action="login.php">
+<div class="form-group">
+<label for="usuario">Usuário:</label>
+<input type="text" name="usuario" required>
+</div>
+<div class="form-group">
+<label for="senha">Senha:</label>
+<input type="password" name="senha" required>
+</div>
+<div class="form-group">
+<input type="submit" value="Entrar">
+</div>
+</form>
+</div>
+<div class="register-form">
+    <div class="form-title">Registrar</div>
+    <form method="POST" action="cadastro.php">
+        <div class="form-group">
+            <label for="usuario">Usuário:</label>
+            <input type="text" name="usuario" required>
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Registrar">
+        </div>
+    </form>
+</div>
+</body> </html>

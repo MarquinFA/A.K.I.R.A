@@ -1,33 +1,85 @@
 <?php
-$servidor = "localhost";
-$usuario = "root";
-$senha = "";
-$banco = "akira";
+require 'config.php';
+session_start();
 
-$conexao = new mysqli($servidor, $usuario, $senha, $banco);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $usuario = $_POST['usuario'] ?? '';
+    $senha = $_POST['senha'] ?? '';
 
+    if (!empty($usuario) && !empty($senha)) {
+        // Verifica se o usuário já existe
+        $stmt = $pdo->prepare('SELECT * FROM usuarios WHERE usuario = ?');
+        $stmt->execute([$usuario]);
 
-if ($conexao->connect_error) {
-    die("Falha na conexão: " .
-    $conexao->connect_error);
-}
-{
-    
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($stmt->rowCount() > 0) {
+            $erro = "Usuário já existe.";
+        } else {
+            // Criptografa a senha e insere o novo usuário
+            $hash = password_hash($senha, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare('INSERT INTO usuarios (usuario, senha) VALUES (?, ?)');
+            $stmt->execute([$usuario, $hash]);
 
-    $nome = $_POST['nome'];
-    $senha = $_POST['senha'];
-
-$sql = "INSERT INTO `loginteste`(`nome`, `senha`) VALUES ('$nome', '$senha')";
-
-    if ($conexao->query($sql) === TRUE) {
-        echo "teste concluido";
+            // Cria sessão e redireciona
+            $_SESSION['usuario'] = $usuario;
+            header('Location: principal.php');
+            exit;
+        }
     } else {
-        echo "teste falhou: " . $sql . "<br>" .
-    $conexao->error;
+        $erro = "Preencha todos os campos.";
     }
-
-    $conexao->close();
-}
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .erro {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+        a {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Cadastro</h2>
+        <?php if (!empty($erro)): ?>
+            <div class="erro"><?= htmlspecialchars($erro) ?></div>
+        <?php endif; ?>
+        <form method="post">
+            <input type="text" name="usuario" placeholder="Usuário" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <a href="login.html">Já tem conta? Faça login</a>
+    </div>
+</body>
+</html>
