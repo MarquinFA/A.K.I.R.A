@@ -2,44 +2,230 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro</title>
+    <title>A.K.I.R.A - Cadastro</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #eef;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #1a1a1a; 
+            overflow: hidden; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            font-family: 'Press Start 2P', cursive;
         }
+
+        /* Quarto */
+        .room {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to top, #2b2b2b, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Luz */
+        .ambient-light {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.02), transparent 70%);
+            animation: light-flicker 5s infinite alternate;
+        }
+
+        @keyframes light-flicker {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Tela de Cadastro */
         .box {
-            background: white;
+            position: relative;
+            background: #1a1a1a;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 0, 0.3),
+                inset 0 0 10px rgba(0, 255, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            z-index: 2;
         }
-        input, button {
-            display: block;
+
+        .box h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: #F22771;
+            text-shadow: 2px 2px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #F22771;
+            border-radius: 5px;
+            background: #111;
+            color: #F22771;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .box button {
+            background: #F22771;
+            color: #F2E52E;
+            border: none;
+            padding: 10px;
             width: 100%;
             margin-top: 10px;
-            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        a {
+
+        .box button:hover {
+            background: #F2E52E;
+            color: #F22771;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(242, 39, 113, 0.4);
+        }
+
+        .box a {
             display: block;
             margin-top: 15px;
-            text-align: center;
+            color: #F22771;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .box a:hover {
+            color: #F2E52E;
+            text-shadow: 0 0 10px #F22771;
+        }
+
+        /* Efeitos de glitch */
+        .box::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(
+                45deg,
+                rgba(242, 39, 113, 0.1),
+                rgba(242, 229, 46, 0.1) 50%,
+                transparent 50%
+            );
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: -1;
+            animation: glitch 2s infinite alternate;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Efeito de scan lines */
+        .scan-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.05) 2px,
+                rgba(255, 255, 255, 0.05) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Ícone de olho */
+        .password-container {
+            position: relative;
+        }
+
+        .password-container input {
+            padding-right: 40px;
+        }
+
+        .password-container .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #F22771;
+            font-size: 1rem;
+        }
+
+        .password-container .eye-icon:hover {
+            color: #F2E52E;
         }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>Cadastro</h2>
-        <form method="post" action="cadastro.php">
-            <input type="text" name="usuario" placeholder="Usuário" required>
-            <input type="password" name="senha" placeholder="Senha" required>
-            <button type="submit">Cadastrar</button>
-        </form>
-        <a href="login.html">Já tem conta? Faça login</a>
+    <div class="room">
+        <div class="ambient-light"></div>
+        <div class="scan-lines"></div>
+        
+        <div class="box">
+            <h2>Cadastro</h2>
+            <form method="post" action="cadastro.php">
+                <input type="text" name="usuario" placeholder="Usuário" required>
+                <div class="password-container">
+                    <input type="password" name="senha" placeholder="Senha" required>
+                    <span class="eye-icon" onclick="togglePasswordVisibility(this)">👁️</span>
+                </div>
+                <button type="submit">Cadastrar</button>
+            </form>
+            <a href="login.html">Já tem conta? Faça login</a>
+        </div>
     </div>
+
+    <script>
+        // Função para alternar a visibilidade da senha
+        function togglePasswordVisibility(icon) {
+            const passwordInput = icon.previousElementSibling;
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.textContent = '👁️';
+            } else {
+                passwordInput.type = 'password';
+                icon.textContent = '👁️';
+            }
+        }
+
+        // Efeito de digitação nos inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.boxShadow = '0 0 10px rgba(242, 39, 113, 0.7)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
