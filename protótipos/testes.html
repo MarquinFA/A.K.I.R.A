@@ -188,14 +188,14 @@
       background-color: white;
       padding: 20px;
       border-radius: 10px;
-      width: 300px;
+      width: 350px;
       max-width: 90%;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .color-options {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin-top: 15px;
     }
@@ -207,6 +207,7 @@
       cursor: pointer;
       border: 3px solid transparent;
       transition: transform 0.2s, border-color 0.2s;
+      margin: 0 auto;
     }
 
     .color-option:hover {
@@ -274,6 +275,12 @@
         <div class="color-option" style="background-color: #FFA500;" data-color="laranja"></div>
         <div class="color-option" style="background-color: #800080;" data-color="roxo"></div>
         <div class="color-option" style="background-color: #FF1493;" data-color="rosa-choque"></div>
+        <!-- Novas cores adicionadas -->
+        <div class="color-option" style="background-color: #00FFFF;" data-color="ciano"></div>
+        <div class="color-option" style="background-color: #A52A2A;" data-color="marrom"></div>
+        <div class="color-option" style="background-color: #FFD700;" data-color="dourado"></div>
+        <div class="color-option" style="background-color: #4B0082;" data-color="indigo"></div>
+        <div class="color-option" style="background-color: #FF6347;" data-color="tomate"></div>
       </div>
     </div>
   </div>
@@ -420,6 +427,42 @@
           menu: "#FF69B4", 
           logo: "#FFFFFF",
           shadow: "3px 3px 0 #CC1076"
+        },
+        // Novas cores adicionadas
+        ciano: { 
+          background: "#00FFFF", 
+          text: "#000000", 
+          menu: "#00CED1", 
+          logo: "#000000",
+          shadow: "3px 3px 0 #00B7BA"
+        },
+        marrom: { 
+          background: "#A52A2A", 
+          text: "#FFFFFF", 
+          menu: "#8B4513", 
+          logo: "#FFFFFF",
+          shadow: "3px 3px 0 #8B0000"
+        },
+        dourado: { 
+          background: "#FFD700", 
+          text: "#000000", 
+          menu: "#DAA520", 
+          logo: "#000000",
+          shadow: "3px 3px 0 #B8860B"
+        },
+        indigo: { 
+          background: "#4B0082", 
+          text: "#FFFFFF", 
+          menu: "#483D8B", 
+          logo: "#FFFFFF",
+          shadow: "3px 3px 0 #3A0072"
+        },
+        tomate: { 
+          background: "#FF6347", 
+          text: "#000000", 
+          menu: "#FF4500", 
+          logo: "#000000",
+          shadow: "3px 3px 0 #CC4C39"
         }
       };
 
@@ -443,7 +486,9 @@
         });
 
         botMessages.forEach(message => {
-          message.style.backgroundColor = color === 'branco' ? '#e0e0e0' : colorMap[color].background;
+          message.style.backgroundColor = color === 'branco' ? '#e0e0e0' : 
+                                         color === 'amarelo' || color === 'dourado' ? '#f0f0f0' : 
+                                         colorMap[color].background;
           message.style.color = colorMap[color].text;
         });
       }
