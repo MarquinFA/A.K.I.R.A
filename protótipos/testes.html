@@ -25,7 +25,7 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza a transição de cores */
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     nav {
@@ -45,8 +45,8 @@
       align-items: center;
       justify-content: center;
       transform: rotate(4995deg);
-      background-color: #F22771; /* Cor inicial do menu */
-      transition: background-color 0.3s ease; /* Suaviza a transição de cores */
+      background-color: #F22771;
+      transition: background-color 0.3s ease;
     }
 
     .nav-content .toggle-btn,
@@ -92,9 +92,9 @@
     .logo {
       font-size: 1.5rem;
       font-family: 'Press Start 2P', cursive;
-      color: #FFFFFF; /* Cor inicial da logo */
+      color: #FFFFFF;
       text-shadow: 3px 3px 0 #F2E52E, 0 0 10px #F22771, 0 0 20px #F22771;
-      transition: color 0.3s ease; /* Suaviza a transição de cores */
+      transition: color 0.3s ease;
       position: absolute;
       top: 50%; 
       left: 50%; 
@@ -125,7 +125,7 @@
       border-radius: 15px;
       word-wrap: break-word;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: background-color 0.3s ease, color 0.3s ease; /* Suaviza a transição de cores */
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .user-message {
@@ -169,6 +169,72 @@
       margin-left: 10px;
       cursor: pointer;
     }
+
+    /* Estilos para o modal de seleção de cores */
+    .color-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .color-modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      max-width: 90%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .color-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .color-option {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .color-option:hover {
+      transform: scale(1.1);
+    }
+
+    .color-option.selected {
+      border-color: #000;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
   </style>
   <nav>
     <div class="nav-content">
@@ -191,12 +257,37 @@
     <button onclick="sendMessage()">Enviar</button>
   </div>
 
+  <!-- Modal de seleção de cores -->
+  <div class="color-modal" id="colorModal">
+    <div class="color-modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Escolha uma cor</div>
+        <button class="close-modal" id="closeModal">&times;</button>
+      </div>
+      <div class="color-options">
+        <div class="color-option" style="background-color: #000000;" data-color="preto"></div>
+        <div class="color-option" style="background-color: #FFFFFF; border: 1px solid #ccc;" data-color="branco"></div>
+        <div class="color-option" style="background-color: #F2E52E;" data-color="amarelo"></div>
+        <div class="color-option" style="background-color: #F22771;" data-color="rosa"></div>
+        <div class="color-option" style="background-color: #0000FF;" data-color="azul"></div>
+        <div class="color-option" style="background-color: #00FF00;" data-color="verde"></div>
+        <div class="color-option" style="background-color: #FFA500;" data-color="laranja"></div>
+        <div class="color-option" style="background-color: #800080;" data-color="roxo"></div>
+        <div class="color-option" style="background-color: #FF1493;" data-color="rosa-choque"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const nav = document.querySelector("nav"),
           toggleBtn = nav.querySelector(".toggle-btn"),
           logo = document.querySelector(".logo"),
           chatContainer = document.getElementById("chatContainer"),
-          userInput = document.getElementById("userInput");
+          userInput = document.getElementById("userInput"),
+          colorPicker = document.getElementById("colorPicker"),
+          colorModal = document.getElementById("colorModal"),
+          closeModal = document.getElementById("closeModal"),
+          colorOptions = document.querySelectorAll(".color-option");
 
     toggleBtn.addEventListener("click", () => {
       nav.classList.toggle("open");
@@ -271,39 +362,65 @@
           background: "#000000", 
           text: "#FFFFFF", 
           menu: "#1A1A1A", 
-          logo: "#FFFFFF" 
+          logo: "#FFFFFF",
+          shadow: "3px 3px 0 #333333"
         },
         branco: { 
           background: "#FFFFFF", 
           text: "#000000", 
           menu: "#F0F0F0", 
-          logo: "#000000" 
+          logo: "#000000",
+          shadow: "3px 3px 0 #CCCCCC"
         },
         amarelo: { 
           background: "#F2E52E", 
           text: "#000000", 
           menu: "#FFD700", 
-          logo: "#000000" 
+          logo: "#000000",
+          shadow: "3px 3px 0 #D4B700"
         },
         rosa: { 
           background: "#F22771", 
           text: "#FFFFFF", 
           menu: "#FF69B4", 
-          logo: "#FFFFFF" 
+          logo: "#FFFFFF",
+          shadow: "3px 3px 0 #D41D60"
         },
         azul: { 
           background: "#0000FF", 
           text: "#FFFFFF", 
           menu: "#1E90FF", 
-          logo: "#FFFFFF" 
+          logo: "#FFFFFF",
+          shadow: "3px 3px 0 #0000CC"
         },
         verde: { 
           background: "#00FF00", 
           text: "#000000", 
           menu: "#32CD32", 
-          logo: "#000000" 
+          logo: "#000000",
+          shadow: "3px 3px 0 #00CC00"
         },
-        // Adicione mais cores aqui se quiser
+        laranja: { 
+          background: "#FFA500", 
+          text: "#000000", 
+          menu: "#FF8C00", 
+          logo: "#000000",
+          shadow: "3px 3px 0 #CC8400"
+        },
+        roxo: { 
+          background: "#800080", 
+          text: "#FFFFFF", 
+          menu: "#9932CC", 
+          logo: "#FFFFFF",
+          shadow: "3px 3px 0 #660066"
+        },
+        "rosa-choque": { 
+          background: "#FF1493", 
+          text: "#FFFFFF", 
+          menu: "#FF69B4", 
+          logo: "#FFFFFF",
+          shadow: "3px 3px 0 #CC1076"
+        }
       };
 
       // Verifica se a cor existe no mapeamento
@@ -317,6 +434,7 @@
 
         // Aplica as cores à logo
         logo.style.color = colorMap[color].logo;
+        logo.style.textShadow = `${colorMap[color].shadow}, 0 0 10px ${colorMap[color].menu}, 0 0 20px ${colorMap[color].menu}`;
 
         // Aplica as cores às mensagens do chat
         userMessages.forEach(message => {
@@ -325,20 +443,41 @@
         });
 
         botMessages.forEach(message => {
-          message.style.backgroundColor = colorMap[color].background;
+          message.style.backgroundColor = color === 'branco' ? '#e0e0e0' : colorMap[color].background;
           message.style.color = colorMap[color].text;
         });
-      } else {
-        alert("Cor não reconhecida! Tente: preto, branco, amarelo, rosa, azul, verde.");
       }
     }
 
-    // Adicionar evento de clique no ícone "palette"
-    document.getElementById("colorPicker").addEventListener("click", () => {
-      const color = prompt("Digite uma cor (ex: preto, branco, amarelo, rosa):");
-      if (color) {
-        changeColors(color.toLowerCase()); // Converte para minúsculas para evitar erros
+    // Mostrar modal quando clicar no ícone de paleta
+    colorPicker.addEventListener("click", (e) => {
+      e.preventDefault();
+      colorModal.style.display = "flex";
+    });
+
+    // Fechar modal quando clicar no X
+    closeModal.addEventListener("click", () => {
+      colorModal.style.display = "none";
+    });
+
+    // Fechar modal quando clicar fora do conteúdo
+    colorModal.addEventListener("click", (e) => {
+      if (e.target === colorModal) {
+        colorModal.style.display = "none";
       }
+    });
+
+    // Selecionar cor quando clicar em uma opção
+    colorOptions.forEach(option => {
+      option.addEventListener("click", () => {
+        const color = option.getAttribute("data-color");
+        changeColors(color);
+        colorModal.style.display = "none";
+        
+        // Adiciona efeito visual de seleção
+        colorOptions.forEach(opt => opt.classList.remove("selected"));
+        option.classList.add("selected");
+      });
     });
   </script>
 </body>
