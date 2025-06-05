@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Configurações</title>
+    <style>
+        /* Resetando margens e paddings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo da página */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Container principal */
+        .container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Barra lateral */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            padding: 20px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar .logo img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-top: 210px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 5px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+            border-radius: 5px;
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            flex: 1;
+            padding: 0; /* Remove o padding para evitar o espaço branco */
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+        }
+
+        /* Header corrigido */
+        .header {
+            background-color: #f22771;
+            width: 100%; /* Ocupa toda a largura do .main-content */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Configurações */
+        .settings {
+            margin-top: 20px;
+            flex: 1;
+        }
+
+        /* Estilo do botão de seleção de linguagem */
+        .language-selector, .theme-selector {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .lang-btn, .theme-btn {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .lang-btn:hover, .theme-btn:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Menuzinho  pequenininho parece minha pomba */
+        .language-menu, .theme-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 1000; /*Treco que faz com que as opções não fiqeum em cima dos botões*/
+        }
+
+        .language-menu a, .theme-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .language-menu a:hover, .theme-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Mostra o menu quando a classe "show" é adicionada */
+        .show {
+            display: block;
+        }
+        .theme-selector, .delete-account {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .theme-btn, .delete-button{
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .theme-btn:hover, .delete-button:hover {
+            background-color: #2c3e50;
+        }
+        .delete-account, .edit-account {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .delete-button, .edit-button{
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .delete-button:hover, .edit-button:hover {
+            background-color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Barra lateral -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="Logo do TCC.jpg" alt="Logo" />
+            </div class="options">
+            <ul>
+                <li><a href="#">Todos</a></li>
+                <li><a href="#">Linguagem</a></li>
+                <li><a href="#">Tema</a></li>
+                <li><a href="#">Conta</a></li>
+                <li><a href="#">Outros</a></li>
+            </ul>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <main class="main-content">
+            <header class="header">
+                <h1 id="conta">Configurações da Conta</h1>
+            </header>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <section class="settings">
+                <!-- Botão de Seleção de Linguagem -->
+                <div class="language-selector">
+                    <button class="lang-btn" onclick="toggleLanguageMenu()">Selecionar Idioma</button>
+                    <div class="language-menu" id="languageMenu">
+                        <a href="#" onclick="changeLanguage('Português')" class="pt-BR">🇧🇷 Português</a>
+                        <a href="#" onclick="changeLanguage('English')" class="eng">🇺🇸 English</a>
+                        <a href="#" onclick="changeLanguage('Español')" class="esp">🇪🇸 Español</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <hr>
+                <!-- Botão de Seleção de Tema -->
+                <div class="theme-selector">
+                    <button class="theme-btn" onclick="toggleThemeMenu()">Selecionar Tema</button>
+                    <div class="theme-menu" id="themeMenu">
+                        <a href="#" onclick="changeTheme('Claro')">Claro</a>
+                        <a href="#" onclick="changeTheme('Escuro')">Escuro</a>
+                        <a href="#" onclick="changeTheme('Amarelo')">Amarelo</a>
+                        <a href="#" onclick="changeTheme('Rosa')">Rosa</a>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <hr>
+
+                <!-- Botão para Deletar Conta -->
+                <div class="delete-account">
+                    <button class="delete-button" onclick="deleteAccount()">Deletar Conta</button>
+                </div>
+                <br>
+                <br>
+                <br>
+                <hr>
+
+                <!-- Botão para Alterar Informações da Conta -->
+                <div class="edit-account">
+                    <button class="edit-button" onclick="editAccount()">Alterar Informações da Conta</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.getElementsByClassName('pt-BR').addEventListener('click', function(){
+            var currentLang = document.documentElement.lang;
+
+            if (currentLang === 'pt-BR') {
+                document.documentElement.lang = 'en';
+                document.getElementsByClassName('conta').textContent = 'Count Settings';
+            } else{
+                document.documentElement.lang = 'pt-BR';
+            }
+        });
+        // Função para abrir/fechar o menu de idiomas
+        function toggleLanguageMenu() {
+            document.getElementById("languageMenu").classList.toggle("show");
+        }
+
+        // Função para mudar o idioma
+        function changeLanguage(lang) {
+            alert("Idioma selecionado: " + lang);
+            document.getElementById("languageMenu").classList.remove("show");
+        }
+
+        // Função para abrir/fechar o menu de temas
+        function toggleThemeMenu() {
+            document.getElementById("themeMenu").classList.toggle("show");
+        }
+
+        // Função para mudar o tema
+        function changeTheme(theme) {
+            alert("Tema selecionado: " + theme);
+            document.getElementById("themeMenu").classList.remove("show");
+        }
+
+        // Função para deletar a conta
+        function deleteAccount() {
+            if (confirm("Tem certeza que deseja deletar sua conta? Essa ação é irreversível.")) {
+                alert("Conta deletada com sucesso!");
+                // Aqui você pode adicionar a lógica para deletar a conta, se necessário
+            }
+        }
+
+        // Função para editar as informações da conta
+        function editAccount() {
+            alert("Redirecionando para a página de edição de conta...");
+            // Aqui você pode adicionar a lógica para redirecionar ou abrir uma página de edição de conta
+        }
+
+        // Fecha o menu ao clicar fora dele
+        window.onclick = function(event) {
+            if (!event.target.matches('.lang-btn') && !event.target.matches('.theme-btn')) {
+                var languageDropdowns = document.getElementsByClassName("language-menu");
+                var themeDropdowns = document.getElementsByClassName("theme-menu");
+                for (var i = 0; i < languageDropdowns.length; i++) {
+                    var openLanguageDropdown = languageDropdowns[i];
+                    if (openLanguageDropdown.classList.contains('show')) {
+                        openLanguageDropdown.classList.remove('show');
+                    }
+                }
+                for (var i = 0; i < themeDropdowns.length; i++) {
+                    var openThemeDropdown = themeDropdowns[i];
+                    if (openThemeDropdown.classList.contains('show')) {
+                        openThemeDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
